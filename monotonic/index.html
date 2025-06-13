@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap with LaTeX</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap CSS (v5.3) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Noto Serif", serif;
+            font-optical-sizing: auto;
+            font-weight: 340;
+            font-style: normal;
+            font-variation-settings: "wdth" 100;
+            max-width: 100%;
+        }
+
+        .theory * {
+            text-align: justify;
+        }
+
+        body {
+            min-height: 100vh;
+            width: 100%;
+            background-color: white;
+        }
+
+        .authors a {
+            color: #007bff;
+            text-decoration: none;
+            animation: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+            color: black;
+        }
+
+        .code {
+            background-color: #e9e9e9;
+            overflow-x: scroll;
+            max-width: 100%;
+        }
+
+        .code,
+        .code * {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.0em
+        }
+
+        .authors a:hover {
+            letter-spacing: 0.1px;
+            text-decoration: underline;
+            font-weight: 540;
+        }
+
+        @media (min-width: 768px) {
+            .border-end-md {
+                border-right: 1px solid #dee2e6;
+                /* matches Bootstrap's default border color */
+            }
+        }
+
+        h1,
+        h2,
+        h3 {
+            text-align: center;
+        }
+
+        .kw {
+            color: #666;
+            font-weight: bold;
+        }
+
+        .id {
+            color: #444;
+        }
+
+        .val {
+            color: #555;
+        }
+
+        .param {
+            color: #555;
+        }
+
+        .method {
+            color: #444;
+        }
+
+        .comment {
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+
+    <!-- MathJax for LaTeX rendering -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+
+    <div class="container justify-content-center align-items-center d-flex p-4" style="min-height:90vh">
+        <div class="row text-center justify-content-center align-items-center d-flex">
+            <h1 class="mb-4">Advancing Constrained Monotonic Neural Networks:<br> Achieving Universal Approximation
+                Beyond Bounded Activations</h1>
+            <div class="authors col-7">
+                <div class="row">
+                    <div class="col-12 col-md-4"><a href="https://scholar.google.com/citations?user=16wyTOEAAAAJ" class="fs-4">Davide Sartor <sup>1</sup></a></div>
+                    <div class="col-12 col-md-4"><a href="https://scholar.google.com/citations?user=kZSBOHIAAAAJ" class="fs-4">Alberto Sinigaglia<sup>2</sup></a></div>
+                    <div class="col-12 col-md-4"><a href="https://scholar.google.com/citations?user=7bgABaoAAAAJ" class="fs-4">Gian Antonio Susto<sup>1,2</sup></a></div>
+                </div>
+            </div>
+            <div class="col-12">
+                <p class="pt-3">
+                    1. Department of Information Engineering, University of Padova, Padova (PD), Italy<br>
+                    2. Human Inspired Technology Research Centre, University of Padova, Padova (PD), Italy
+                </p>
+            </div>
+            <hr class="m-3">
+            <p>
+                <em style="font-style: italic;">Proceedings of the 42nd International Conference on Machine
+                    Learning</em> (ICML), Vancouver, Canada. PMLR 267, 2025.
+            </p>
+            <div class="col-12 pb-4">
+                <a href="https://icml.cc/virtual/2025/poster/45293" class="btn btn-dark pe-3 ps-3"
+                    style="border-radius: 50px;">
+                    <span class="icon pe-2">
+                        <svg style="width: .75em;margin-top: -3px;" aria-hidden="true" focusable="false"
+                            data-prefix="fas" data-icon="file-pdf" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 384 512" data-fa-i2svg="">
+                            <path fill="currentColor"
+                                d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9zm-74.1 255.3c4.1-2.7-2.5-11.9-42.8-9 37.1 15.8 42.8 9 42.8 9z">
+                            </path>
+                        </svg><!-- <i class="fas fa-file-pdf"></i> Font Awesome fontawesome.com -->
+                    </span>
+                    <span>Paper</span>
+                </a>
+                <a href="https://github.com/AMCO-UniPD/monotonic" class="btn btn-dark pe-3 ps-3"
+                    style="border-radius: 50px;">
+                    <span class="icon pe-2">
+                        <svg style="width: 1.2em;margin-top: -3px;" aria-hidden="true" focusable="false"
+                            data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 496 512" data-fa-i2svg="">
+                            <path fill="currentColor"
+                                d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z">
+                            </path>
+                        </svg><!-- <i class="fab fa-github"></i> Font Awesome fontawesome.com -->
+                    </span>
+                    <span>Code</span>
+                </a>
+                <a href="https://arxiv.org/pdf/2505.02537" class="btn btn-dark pe-3 ps-3" style="border-radius: 50px;">
+                    <span class="icon pe-2">
+                        <svg style="width: 0.9em;margin-top: -3px;" aria-hidden="true" focusable="false"
+                            data-prefix="fab" data-icon="github" role="img" xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 17.732 24.269">
+                            <g id="tiny">
+                                <path
+                                    d="M573.549,280.916l2.266,2.738,6.674-7.84c.353-.47.52-.717.353-1.117a1.218,1.218,0,0,0-1.061-.748h0a.953.953,0,0,0-.712.262Z"
+                                    transform="translate(-566.984 -271.548)" fill="#bdb9b4" />
+                                <path
+                                    d="M579.525,282.225l-10.606-10.174a1.413,1.413,0,0,0-.834-.5,1.09,1.09,0,0,0-1.027.66c-.167.4-.047.681.319,1.206l8.44,10.242h0l-6.282,7.716a1.336,1.336,0,0,0-.323,1.3,1.114,1.114,0,0,0,1.04.69A.992.992,0,0,0,571,293l8.519-7.92A1.924,1.924,0,0,0,579.525,282.225Z"
+                                    transform="translate(-566.984 -271.548)" fill="#b31b1b" />
+                                <path
+                                    d="M584.32,293.912l-8.525-10.275,0,0L573.53,280.9l-1.389,1.254a2.063,2.063,0,0,0,0,2.965l10.812,10.419a.925.925,0,0,0,.742.282,1.039,1.039,0,0,0,.953-.667A1.261,1.261,0,0,0,584.32,293.912Z"
+                                    transform="translate(-566.984 -271.548)" fill="#bdb9b4" />
+                            </g>
+                        </svg>
+                    </span>
+                    <span>ArXiv</span>
+                </a>
+            </div>
+            <hr class="mb-3">
+            <div class="col-12" style="max-width:100%; overflow: scroll;">
+                <pre class="text-start ps-5 pe-5 pt-2 pb-2"
+                    style="background-color: #e9e9e9; overflow-x:scroll; max-width: 100%; ">
+                    <code>
+@inproceedings{SinigagliaSartorSusto2025,
+    author       = {Alberto Sinigaglia and Davide Sartor and Gian Antonio Susto},
+    title        = {Advancing Constrained Monotonic Neural Networks: Achieving Universal Approximation Beyond Bounded Activations},
+    booktitle    = {Proceedings of the 42nd International Conference on Machine Learning (ICML)},
+    year         = {2025},
+}</code>
+                </pre>
+            </div>
+
+
+
+            <!-- <p>This is a LaTeX expression rendered with MathJax:</p>
+            <p>Euler's identity: \( e^{i\pi} + 1 = 0 \)</p> -->
+        </div>
+    </div>
+    <div class="bg-light">
+        <div class="container p-5">
+            <div class="row ">
+                <h2>
+                    TL;DR
+                </h2>
+                <ol class="ps-5" style="text-align: justify;">
+                    <li>
+                        MLPs with activations that saturate on alternating sides and non-negative weights are universal
+                        approximators for monotonic functions.
+                    </li>
+                    <li>
+                        Thanks to 1, we show that MLPs with non-positive weights and convex monotone activations are
+                        also universal approximators. This can come as a surprise, as it's counterpart with non-negative
+                        weights does not hold.
+                    </li>
+                    <li>
+                        We propose a novel formulation that allows the network to adjust its activations according to
+                        the sign of the weights, easing initialization and improving training stability.
+                    </li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container p-5">
+        <div class="row ">
+            <h2 class="pb-4">
+                Abstract
+            </h2>
+            <div class="col-12 col-md-6">
+                <p style="text-align: justify;">
+                    Conventional techniques for imposing monotonicity in MLPs by construction involve the use of
+                    non-negative weight constraints and bounded activation functions, which pose well-known optimization
+                    challenges.
+                    In this work, we generalize previous theoretical results, showing that MLPs with non-negative weight
+                    constraint and activations that saturate on alternating sides are universal approximators for
+                    monotonic
+                    functions.
+                    Additionally, we show an equivalence between the saturation side in the activations and the sign of
+                    the
+                    weight constraint. This connection allows us to prove that MLPs with convex monotone activations and
+                    non-positive constrained weights also qualify as universal approximators, in contrast to their
+                    non-negative constrained counterparts.
+                    Our results provide theoretical grounding to the empirical effectiveness observed in previous works
+                    while leading to possible architectural simplification.
+                    Moreover, to further alleviate the optimization difficulties, we propose an alternative formulation
+                    that
+                    allows the network to adjust its activations according to the sign of the weights. This eliminates
+                    the
+                    requirement for weight reparameterization, easing initialization and improving training stability.
+                    Experimental evaluation reinforces the validity of the theoretical results, showing that our novel
+                    approach compares favourably to traditional monotonic architectures.
+                </p>
+            </div>
+            <div class="col-12 col-md-6 ps-5">
+                <img src="figures/example.svg" class="img-fluid p-3 pt-0"
+                    alt="Example of monotonic function approximation"
+                    style="width: 500px; max-width:100%; height: auto;">
+                <p style="text-align: justify;">
+                    Monotone MLPs with weight-constraint and bounded activations (pink) and our proposed approach based
+                    on \(\text{ReLU}\) (blue). The former can only represent bounded functions and, thus, cannot
+                    extrapolate the data trend, which is important in many domains, such as time-series analysis and
+                    predictive maintenance.
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="bg-light">
+        <div class="container p-5">
+            <div class="row theory">
+                <h2>Theoretical Foundations</h2>
+
+                <div class="pt-3">
+                    <h5 class="fw-bold">Definition</h5>
+                    <p>
+                        A function \( \sigma: \mathbb{R} \rightarrow \mathbb{R} \) is <em>right-saturating</em> if \(
+                        \lim_{x \rightarrow +\infty} \sigma(x) \in \mathbb{R} \), and <em>left-saturating</em> if \(
+                        \lim_{x \rightarrow -\infty} \sigma(x) \in \mathbb{R} \). <br>
+                        We denote the sets of right- and left-saturating activations by \( \mathcal{S}^+ \) and \(
+                        \mathcal{S}^- \), respectively.
+                    </p>
+
+                    <h5 class="fw-bold mt-4">Proposition</h5>
+                    <p>
+                        For any MLP with non-negative weights and activation \( \sigma(x) \), and for any \( a \in
+                        \mathbb{R}_+, b \in \mathbb{R} \), there exists an equivalent MLP with non-negative weights and
+                        activation \( a\sigma(x) + b \).
+                    </p>
+                    <p>
+                        Consequently, we assume without loss of generality that all activations saturate to zero.
+                    </p>
+
+                    <h5 class="fw-bold mt-4">Theorem</h5>
+                    <p>
+                        An MLP \( g_\theta: \mathbb{R}^d \rightarrow \mathbb{R} \) with non-negative weights and 3
+                        hidden layers can interpolate any monotonic non-decreasing function \( f(x) \) on a finite set
+                        of \( n \) points, provided that the activations are monotonic non-decreasing and alternate
+                        saturation sides:
+                    </p>
+                    <ul>
+                        <li>\( \sigma^{(1)} \in \mathcal{S}^-, \sigma^{(2)} \in \mathcal{S}^+, \sigma^{(3)} \in
+                            \mathcal{S}^- \)</li>
+                        <li>or \( \sigma^{(1)} \in \mathcal{S}^+, \sigma^{(2)} \in \mathcal{S}^-, \sigma^{(3)} \in
+                            \mathcal{S}^+ \)</li>
+                    </ul>
+
+                    <h5 class="fw-bold mt-4">Lemma 1</h5>
+                    <p>
+                        Let \( \alpha \in \mathbb{R}_+^d \), \( \beta \in \mathbb{R}^d \). Define:
+                        \[ A^+ = \{ x : \alpha^\top (x - \beta) > 0 \}, \quad A^- = \{ x : \alpha^\top (x - \beta) < 0
+                            \} \] Then the \( i \)-th neuron of the first hidden layer of an MLP with non-negative
+                            weights can approximate: \[ h^{(1)}_i(x) \approx \begin{cases} \sigma^{(1)}(+\infty), & x
+                            \in A^+ \\ \sigma^{(1)}(-\infty), & x \in A^- \\ \sigma^{(1)}(0), & \text{otherwise}
+                            \end{cases} \] </p>
+
+                            <h5 class="fw-bold mt-4">Lemma 2</h5>
+                            <p>
+                                Consider \( A = \bigcap_{i=1}^n A_i \), where each \( A_i \subset \mathbb{R}^d \). Let
+                                \( \gamma \) be in the image of \( \sigma^{(k)} \). Then a single neuron \( h^{(k)}_j \)
+                                in the \( k \)-th layer can approximate:
+                                \[
+                                h^{(k)}_j(x) \approx \gamma \cdot \mathbf{1}_A(x)
+                                \]
+                                provided:
+                            <ul>
+                                <li>\( h^{(k-1)}_i(x) \approx 0 \) for \( x \in A_i \), and</li>
+                                <li>either \( \sigma^{(k)} \in \mathcal{S}^- \) with \( h^{(k-1)}_i(x) < 0 \) for \( x
+                                        \notin A_i \),</li>
+                                <li>or \( \sigma^{(k)} \in \mathcal{S}^+ \) with \( h^{(k-1)}_i(x) > 0 \) for \( x
+                                    \notin A_i \).</li>
+                            </ul>
+                    </p>
+
+                    <h5 class="fw-bold mt-4">Proof Sketch of Theorem</h5>
+                    <p>
+                        Let \( x_1, \dots, x_n \) be the ordered points with \( f(x_i) \le f(x_j) \) for \( i < j \).
+                            The proof proceeds layer-wise: </p>
+                            <ul>
+                                <li>
+                                    <strong>Layer 1:</strong> For each pair \( (x_i, x_j) \), define half-spaces using
+                                    \( \alpha_{j/i} \in \mathbb{R}_+^d \), \( \beta_{j/i} \in \mathbb{R}^d \), such that
+                                    \( x_j \in A^+_{j/i} \), \( x_i \in A^-_{j/i} \). Using Lemma 1, implement
+                                    indicator-like units.
+
+                                    <div
+                                        style="width:100%; display: flex; justify-content: center; align-items: center;">
+                                        <img src="figures/l1.svg" class="img-fluid p-3" alt="Layer 1 illustration"
+                                            style="width: 600px; max-width:100%; height: auto;">
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Layer 2:</strong> For each \( i \), construct \( A^{(2)}_i = \bigcap_{j>i}
+                                    A^-_{j/i} \). Use Lemma 2 with \( \sigma^{(2)} \in \mathcal{S}^+ \) to encode the
+                                    inclusion of \( x_i \) and exclusion of \( x_j \) for \( j > i \).
+                                    <div
+                                        style="width:100%; display: flex; justify-content: center; align-items: center;">
+                                        <img src="figures/l2.svg" class="img-fluid p-3" alt="Layer 2 illustration"
+                                            style="width: 600px; max-width:100%; height: auto;">
+                                    </div>
+                                </li>
+                                <li>
+                                    <strong>Layer 3:</strong> Define \( A^{(3)}_i = \bigcap_{j < i} \overline{A^{(2)}_j}
+                                        \). Again apply Lemma 2 with \( \sigma^{(3)} \in \mathcal{S}^- \). This step
+                                        encodes the "level set" of \( f(x_i) \le f(x_j) \). <div
+                                        style="width:100%; display: flex; justify-content: center; align-items: center;">
+                                        <img src="figures/l3.svg" class="img-fluid p-3" alt="Layer 3 illustration"
+                                            style="width: 600px; max-width:100%; height: auto;">
+                </div>
+                </li>
+                <li>
+                    <strong>Layer 4:</strong> Construct the output as a telescoping sum:
+                    \[
+                    g_\theta(x) = b + \sum_{j=1}^n \left( f(x_j) - f(x_{j-1}) \right) \cdot
+                    \mathbf{1}_{A^{(3)}_j}(x)
+                    \]
+                    with \( f(x_0) = b \). This exactly recovers \( f(x_i) \) for all inputs \( x_i \).
+                </li>
+                </ul>
+                <p>This completes the proof of universal approximation under alternating saturation. For a more formal
+                    proof, please refer <a href="https://arxiv.org/pdf/2505.02537" class="text-black">to the paper</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <div class="container p-5">
+        <div class="row ">
+            <h2 class="pb-4">On the surprising effectiveness of non-positive weights</h2>
+            <div class="col-12 col-md-6 p-5 pt-0 pb-2 border-end-md">
+                <h4 class="text-center">ReLU + non-negative weights</h4>
+                <p style="text-align: justify;">
+                    An MLP composed of activations \(\text{ReLU}(x) = \max(0, x)\) and non-negative weights cannot
+                    approximate any monotonic function.
+                    <br>
+                    This is due to the fact the composition of convex non-decreasing functions is still a convex
+                    non-decreasing function. Indeed, ReLU is a convex non-decreasing function, and the non-negativity of
+                    the linear layers \(|W|\) is also a convex non-decreasing function.
+                </p>
+            </div>
+            <div class="col-12 col-md-6 p-5 pt-0 pb-2">
+                <h4 class="text-center">ReLU + non-positive weights</h4>
+                <p style="text-align: justify;">
+                    Considering an MLP \(f\) as
+                    \[f(x) = \dots -|W|\text{ReLU}(-|W| x + b) + b \dots \]
+                    we can group the negative weights and the ReLU activation together, obtaining a new activation
+                    \(\text{ReLU}' = -\text{ReLU}(-x)\), which is a convex non-decreasing function.
+                    In particular, given we need 2 linear layers to create \(\text{ReLU}'\), this happens at alternating
+                    activations.<br>
+                    This means that this MLP can be reconduct to the case proven in the main theorem, showing how it's a
+                    universal approximator for monotonic functions.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container p-5">
+        <div class="row">
+            <h2 class="pb-4">Relaxing Weight Constraints with Activation Switches</h2>
+
+            <p>
+    <img src="figures/graph.svg"
+         alt="Activation switch illustration"
+         style="width: 500px; max-width: 100%; height: auto; float: right; margin: 0 15px 15px 0;">
+                When employing weight-constrained monotonic MLPs, the choice of activation saturation sides remains a
+                non-trivial hyperparameter.
+                However, it is possible to remove this requirement—and relax the weight constraints entirely—by
+                reordering the computational steps.
+                <br><br>
+                Consider a single-layer transformation \( f(x) = \sigma(|W|x + b) \), where absolute weights enforce
+                non-negativity. We can decompose this affine transformation as:
+                \[
+                |W|x + b = W^+ x - W^- x + b,
+                \]
+                where \( W^+ = \max(W, 0) \) and \( W^- = \min(W, 0) \).
+                <br><br>
+                Applying the activation function independently to each affine component yields the following
+                parameterization:
+                \[
+                \hat{f}(x) = \sigma(W^+ x + b) - \sigma(W^- x + b).
+                \]
+                We refer to this as the <strong>pre-activation switch</strong>.
+            </p>
+
+            <h5 class="fw-bold mt-4">Proposition</h5>
+            <p>
+                Any function representable by an affine transformation with non-negative weights followed by either \(
+                \sigma \) or its reflection \( \sigma' \), can also be represented using the pre-activation switch
+                formulation, up to an additive constant.
+            </p>
+
+            <p>
+                <strong>Proof sketch:</strong> If all weights share the same sign, then one of the terms collapses to a
+                constant:
+            <ul class="ps-5">
+                <li>If \( W \ge 0 \), then \( \hat{f}(x) = \sigma(Wx + b) - \sigma(b) \).</li>
+                <li>If \( W \le 0 \), then \( \hat{f}(x) = \sigma(b) - \sigma(-Wx + b) = \sigma'(Wx + b) + \text{const}
+                    \).</li>
+            </ul>
+            </p>
+            <p>
+                The residual constant can be absorbed by the bias in the next layer.
+            </p>
+
+            <p>
+                This demonstrates that monotonic MLPs composed of at least 4 such layers are universal approximators.
+                Moreover, the formulation is strictly more expressive than the weight-constrained variant, as the latter
+                is a special case.
+            </p>
+
+            <p>
+                By reversing this logic from the final layer, we obtain an alternative formulation, referred to as the <strong>post-activation switch</strong>:
+                \[
+                \hat{f}(x) = W^+ \sigma(x) + W^- \sigma(-x) + b,
+                \]
+                
+            </p>
+
+
+            <p>
+                The method only adds one matrix multiplication and leverages existing GPU-parallelized infrastructure.
+                In practice, no significant computational overhead was observed in the tested architectures.
+            </p>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="bg-light">
+        <div class="container p-5">
+            <div class="row">
+                <h2 class="pb-4">PyTorch Implementation</h2>
+                <pre style="font-family: monospace; " class="code pt-3 ps-5 pe-5 pt-2 pb-2">
+<span class="kw">class</span> <span class="id">MonotonicLinear</span>(<span class="id">nn.Linear</span>):
+    <span class="kw">def</span> <span class="method">__init__</span>(
+        <span class="param">self</span>,
+        <span class="param">in_features</span>: <span class="val">int</span>,
+        <span class="param">out_features</span>: <span class="val">int</span>,
+        <span class="param">bias</span>: <span class="val">bool</span> = <span class="val">True</span>,
+        <span class="param">device</span>=<span class="val">None</span>,
+        <span class="param">dtype</span>=<span class="val">None</span>,
+        <span class="param">pre_activation</span>=<span class="id">nn.Identity()</span>,
+    ):
+        <span class="id">super()</span>.<span class="method">__init__</span>(
+            in_features, out_features,
+            bias=bias, device=device, dtype=dtype
+        )
+        <span class="id">self.act</span> = pre_activation
+
+    <span class="kw">def</span> <span class="method">forward</span>(<span class="param">self</span>, <span class="param">x</span>):
+        <span class="id">w_pos</span> = <span class="id">self.weight.clamp</span>(<span class="param">min=0.0</span>)
+        <span class="id">w_neg</span> = <span class="id">self.weight.clamp</span>(<span class="param">max=0.0</span>)
+        <span class="id">x_pos</span> = <span class="id">F.linear</span>(<span class="id">self.act</span>(x), w_pos, <span class="id">self.bias</span>)
+        <span class="id">x_neg</span> = <span class="id">F.linear</span>(<span class="id">self.act</span>(-x), w_neg, <span class="id">self.bias</span>)
+        <span class="kw">return</span> x_pos + x_neg
+    
+<span class="id">monotonic_mlp</span> = <span class="id">nn.Sequential</span>([
+    <span class="id">MonotonicLinear</span>(<span class="id">N</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.Identity()</span>),
+    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.SiLU()</span>),
+    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.SiLU()</span>),
+    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">1</span>, <span class="param">pre_activation</span>=<span class="id">nn.SiLU()</span>),
+])
+                </pre>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
