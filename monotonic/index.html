@@ -576,9 +576,9 @@
     
 <span class="id">monotonic_mlp</span> = <span class="id">nn.Sequential</span>([
     <span class="id">MonotonicLinear</span>(<span class="id">N</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.Identity()</span>),
-    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.SiLU()</span>),
-    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.SiLU()</span>),
-    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">1</span>, <span class="param">pre_activation</span>=<span class="id">nn.SiLU()</span>),
+    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.SELU()</span>),
+    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">16</span>, <span class="param">pre_activation</span>=<span class="id">nn.SELU()</span>),
+    <span class="id">MonotonicLinear</span>(<span class="val">16</span>, <span class="val">1</span>, <span class="param">pre_activation</span>=<span class="id">nn.SELU()</span>),
 ])
                 </pre>
         </div>
