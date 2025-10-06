@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple and Effective Specialized Representations for Fair Classifiers</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Project page for 'Simple and Effective Specialized Representations for Fair Classifiers' (NeurIPS 2025). A simple CF-based objective (FmCF) and a classification-focused sufficient-statistics variant (FmSS) yield fair, specialized representations with strong accuracy and practical guarantees." />
+    <meta name="keywords"
+        content="fairness, fair representation learning, characteristic function, sufficient statistics, logistic regression, specialized representations, NeurIPS 2025, University of Padua" />
+    <meta name="author" content="Alberto Sinigaglia, Davide Sartor, Marina Ceccon, Gian Antonio Susto" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:title" content="Fair Classifiers via Specialized Representations" />
+    <meta property="og:description"
+        content="A simple, effective framework for fair specialized representations: FmCF and FmSS." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://amco-unipd.github.io/fairness/" />
+    <meta property="og:image" content="figure/frontpage.jpg" />
+
+    <!-- Twitter Card (optional) -->
+    <!-- <meta name="twitter:card" content="summary_large_image"> -->
+
+    <!-- <link rel="icon" href="/favicon.ico" type="image/x-icon"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet" />
+
+    <!-- Bootstrap CSS (v5.3) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        * {
+            font-family: "Noto Serif", serif;
+            font-optical-sizing: auto;
+            font-weight: 340;
+            font-style: normal;
+            font-variation-settings: "wdth" 100;
+            max-width: 100%;
+        }
+
+        .theory * {
+            text-align: justify;
+        }
+
+        body {
+            min-height: 100vh;
+            width: 100%;
+            background-color: white;
+        }
+
+        .authors a {
+            text-decoration: none;
+            transition: all 0.3s ease-in-out;
+            color: black;
+        }
+
+        .authors a:hover {
+            letter-spacing: 0.1px;
+            text-decoration: underline;
+            font-weight: 540;
+        }
+
+        .code {
+            background-color: #e9e9e9;
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+        .code,
+        .code * {
+            font-family: 'Roboto Mono', monospace;
+            font-size: 1.0em
+        }
+
+        @media (min-width: 768px) {
+            .border-end-md {
+                border-right: 1px solid #dee2e6;
+            }
+        }
+
+        h1,
+        h2,
+        h3 {
+            text-align: center;
+        }
+
+        .kw {
+            color: #666;
+            font-weight: bold;
+        }
+
+        .id {
+            color: #444;
+        }
+
+        .val {
+            color: #555;
+        }
+
+        .param {
+            color: #555;
+        }
+
+        .method {
+            color: #444;
+        }
+
+        .comment {
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+
+    <!-- MathJax for LaTeX rendering -->
+    <script>
+        window.MathJax = {
+            tex: { inlineMath: [["$", "$"], ["\\(", "\\)"]] },
+            svg: { fontCache: 'global' }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+</head>
+
+<body>
+    <!-- HERO / HEADER -->
+    <div class="container justify-content-center align-items-center d-flex p-4" style="min-height:90vh">
+        <div class="row text-center justify-content-center align-items-center d-flex">
+            <h1 class="mb-4">Simple and Effective Specialized <br class="d-none d-md-block" /> Representations for Fair
+                Classifiers</h1>
+
+            <div class="authors col-12 col-md-10">
+                <div class="row g-2 g-md-3">
+                    <div class="col-12 col-md-3">
+                        <a href="https://scholar.google.com/citations?user=kZSBOHIAAAAJ" class="fs-5">Alberto
+                            Sinigaglia<sup>* 1</sup></a>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <a href="https://scholar.google.com/citations?user=16wyTOEAAAAJ" class="fs-5">Davide
+                            Sartor<sup>* 2</sup></a>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <a href="https://scholar.google.com/citations?user=p4_-hrEAAAAJ" class="fs-5">Marina
+                            Ceccon<sup>2</sup></a>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <a href="https://scholar.google.com/citations?user=7bgABaoAAAAJ" class="fs-5">Gian Antonio
+                            Susto<sup>1,2</sup></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <p class="pt-3">
+                    1. Human Inspired Technology Research Center, University of Padua (Padova), Italy<br />
+                    2. Department of Information Engineering, University of Padua (Padova), Italy
+                </p>
+                <p class="text-muted" style="margin-top:-8px;">* Equal contribution</p>
+            </div>
+
+            <hr class="m-3" />
+            <p>
+                <em style="font-style: italic;">Proceedings of the 39th Annual Conference on Neural Information
+                    Processing Systems</em> (Neurips), San Diego, California, 2025.
+            </p>
+
+            <!-- ACTION BUTTONS -->
+            <div class="col-12 pb-4 d-flex flex-wrap justify-content-center gap-2">
+                <a href="https://arxiv.org/pdf/2505.11740" class="btn btn-dark pe-3 ps-3" style="border-radius: 50px;">
+                    <span class="icon pe-2">
+                        <svg style="width: .9em;margin-top: -3px;" aria-hidden="true" focusable="false"
+                            viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor"
+                                d="M181.9 256.1c-5-16-4.9-46.9-2-46.9 8.4 0 7.6 36.9 2 46.9zm-1.7 47.2c-7.7 20.2-17.3 43.3-28.4 62.7 18.3-7 39-17.2 62.9-21.9-12.7-9.6-24.9-23.4-34.5-40.8zM86.1 428.1c0 .8 13.2-5.4 34.9-40.2-6.7 6.3-29.1 24.5-34.9 40.2zM248 160h136v328c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V24C0 10.7 10.7 0 24 0h200v136c0 13.2 10.8 24 24 24zm-8 171.8c-20-12.2-33.3-29-42.7-53.8 4.5-18.5 11.6-46.6 6.2-64.2-4.7-29.4-42.4-26.5-47.8-6.8-5 18.3-.4 44.1 8.1 77-11.6 27.6-28.7 64.6-40.8 85.8-.1 0-.1.1-.2.1-27.1 13.9-73.6 44.5-54.5 68 5.6 6.9 16 10 21.5 10 17.9 0 35.7-18 61.1-61.8 25.8-8.5 54.1-19.1 79-23.2 21.7 11.8 47.1 19.5 64 19.5 29.2 0 31.2-32 19.7-43.4-13.9-13.6-54.3-9.7-73.6-7.2zM377 105L279 7c-4.5-4.5-10.6-7-17-7h-6v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z" />
+                        </svg>
+                    </span>
+                    <span>Paper (PDF)</span>
+                </a>
+                <a href="https://github.com/AMCO-UniPD/simple-effective-fairness" class="btn btn-dark pe-3 ps-3"
+                    style="border-radius: 50px;">
+                    <span class="icon pe-2">
+                        <svg style="width: 1.2em;margin-top: -3px;" aria-hidden="true" focusable="false"
+                            viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="currentColor"
+                                d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8z" />
+                        </svg>
+                    </span>
+                    <span>Code</span>
+                </a>
+                <a href="https://arxiv.org/abs/2505.11740" class="btn btn-dark pe-3 ps-3" style="border-radius: 50px;">
+                    <span class="icon pe-2">
+                        <svg style="width: 0.9em;margin-top: -3px;" aria-hidden="true" focusable="false"
+                            viewBox="0 0 17.732 24.269" xmlns="http://www.w3.org/2000/svg">
+                            <g id="tiny">
+                                <path
+                                    d="M573.549,280.916l2.266,2.738,6.674-7.84c.353-.47.52-.717.353-1.117a1.218,1.218,0,0,0-1.061-.748h0a.953.953,0,0,0-.712.262Z"
+                                    transform="translate(-566.984 -271.548)" fill="#bdb9b4" />
+                                <path
+                                    d="M579.525,282.225l-10.606-10.174a1.413,1.413,0,0,0-.834-.5,1.09,1.09,0,0,0-1.027.66c-.167.4-.047.681.319,1.206l8.44,10.242h0l-6.282,7.716a1.336,1.336,0,0,0-.323,1.3,1.114,1.114,0,0,0,1.04.69A.992.992,0,0,0,571,293l8.519-7.92A1.924,1.924,0,0,0,579.525,282.225Z"
+                                    transform="translate(-566.984 -271.548)" fill="#b31b1b" />
+                                <path
+                                    d="M584.32,293.912l-8.525-10.275,0,0L573.53,280.9l-1.389,1.254a2.063,2.063,0,0,0,0,2.965l10.812,10.419a.925.925,0,0,0,.742.282,1.039,1.039,0,0,0,.953-.667A1.261,1.261,0,0,0,584.32,293.912Z"
+                                    transform="translate(-566.984 -271.548)" fill="#bdb9b4" />
+                            </g>
+                        </svg>
+                    </span>
+                    <span>arXiv</span>
+                </a>
+                <!-- Optional extra buttons
+        <a href="#" class="btn btn-outline-dark pe-3 ps-3" style="border-radius: 50px;">Poster</a>
+        <a href="#" class="btn btn-outline-dark pe-3 ps-3" style="border-radius: 50px;">Slides</a>
+        -->
+            </div>
+
+            <hr class="mb-3" />
+
+            <!-- BibTeX block near top (easy to copy) -->
+            <div class="col-12" style="max-width:100%; overflow: auto;">
+                <pre class="text-start ps-4 pe-4 pt-2 pb-2 code" style="background-color: #e9e9e9;">
+            <code>
+    @inproceedings{SinigagliaSartorCecconSusto2025,
+        author    = {Alberto Sinigaglia and Davide Sartor and Marina Ceccon and Gian Antonio Susto},
+        title     = {Simple and Effective Specialized Representations for Fair Classifiers},
+        booktitle = {Advances in Neural Information Processing Systems (NeurIPS)},
+        year      = {2025},
+    }</code>
+          </pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- TL;DR -->
+    <div class="bg-light">
+        <div class="container p-5">
+            <div class="row">
+                <h2>TL;DR</h2>
+                <ol class="ps-5" style="text-align: justify;">
+                    <li>We learn <em>specialized</em> fair representations without adversarial training using a
+                        <strong>Characteristic Function Distance</strong> penalty (FmCF).</li>
+                    <li>We introduce a simpler, classifier-focused variant (FmSS) that matches <em>first/second
+                            moments</em> and yields <strong>provable guarantees</strong> for logistic downstream models.
+                    </li>
+                    <li>Across standard fairness benchmarks, our methods <em>match or surpass</em> prior work on
+                        accuracy while reducing sensitive-attribute leakage.</li>
+                </ol>
+                
+        <div class="col-12 pt-5 d-flex align-items-center justify-content-center">
+            <img src="figure/frontpage.png" class="img-fluid p-3 pt-0" alt="Overview of the proposed approach" style="width: 1000px; max-width:100%; height: auto;" />
+        </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABSTRACT + TEASER -->
+    <div class="container p-5">
+        <div class="row">
+            <h2 class="pb-4">Abstract</h2>
+            <div class="col-12 col-md-6">
+                <p style="text-align: justify;">
+                    Fair classification is a critical challenge that has gained increasing importance due to
+                    international regulations and its growing use in high-stakes decision-making settings. Existing
+                    methods often rely on adversarial learning or distribution matching across sensitive groups;
+                    however, adversarial learning can be unstable, and distribution matching can be computationally
+                    intensive. To address these limitations, we propose a novel approach based on the characteristic
+                    function distance. Our method ensures that the learned representation contains minimal sensitive
+                    information while maintaining high effectiveness for downstream tasks. By utilizing characteristic
+                    functions, we achieve a more stable and efficient solution compared to traditional methods.
+                    Additionally, we introduce a simple relaxation of the objective function that guarantees fairness in
+                    common classification models with no performance degradation. Experimental results on benchmark
+                    datasets demonstrate that our approach consistently matches or achieves better fairness and
+                    predictive accuracy than existing methods. Moreover, our method maintains robustness and
+                    computational efficiency, making it a practical solution for real-world applications.
+                </p>
+            </div>
+            <div class="col-12 col-md-6 ps-md-5">
+                <div class="d-flex align-items-center justify-content-center"><img src="figure/2D.png"
+                        class="img-fluid p-3 pt-0" alt="Overview of the proposed approach"
+                        style="width: 400px; max-width:100%; height: auto; margin:auto" /></div>
+                <p style="text-align: justify;">
+                    Overview of the framework: the encoder maps inputs $X$ to representations $Z$ that <em>retain
+                        task-relevant structure</em> while <em>minimizing sensitive information</em> via (i) CF matching
+                    (FmCF) or (ii) sufficient-statistics alignment (FmSS).
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- METHOD SNAPSHOT -->
+    <div class="bg-light">
+        <div class="container p-5 theory">
+            <div class="row">
+                <h2 class="text-center">Method at a Glance</h2>
+
+                <div class="col-12 col-lg-6 pt-3 border-end-md">
+                    <h4 class="text-center">FmCF — Fairness matching Characteristic Function</h4>
+                    <p>
+                        For each group $s \in \mathcal{S}$, we penalize the <em>Characteristic Function Distance</em>
+                        (CFD) between $\mathbb{P}(Z\mid S{=}s)$ and a target (e.g., standard Normal):
+                    </p>
+                    <p class="mb-2">
+                        $$\operatorname{CFD}_{\mathbb{P}_T}^2\big(\mathbb{P}(Z\mid s), \mathbb{P}(\mathcal{N})\big)\;=\;
+                        \mathbb{E}_{T}\big[\,\lvert \varphi_{Z\mid s}(T) - e^{-\|T\|^2/2}\rvert^2\,\big].$$
+                    </p>
+                    <p>
+                        Monte Carlo draws $T\!\sim\!\mathbb{P}_T$ make the objective <em>differentiable</em> and easy to
+                        use with any encoder.
+                    </p>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="figure/fmcf.png" class="img-fluid" alt="FmCF Overview"
+                            style="width: 100%; max-width:400px; height: auto;" />
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6 pt-3">
+                    <h4 class="text-center">FmSS — Fairness matching Sufficient Statistics</h4>
+                    <p>
+                        For classification, matching the <em>first two moments</em> of $\mathbb{P}(Z\mid S)$ is
+                        sufficient to limit a logistic adversary. We minimize the KL to $\mathcal{N}(0,1)$ per group:
+                    </p>
+                    <p class="mb-2">$$\mathrm{KL}\big(\mathcal{N}(\mu_s,\sigma_s^2)\,\|\,\mathcal{N}(0,1)\big) =
+                        \tfrac{1}{2}\,\big(\sigma_s^2 + \mu_s^2 - 1 - \log \sigma_s^2\big).$$</p>
+                    <p>
+                        This yields <em>provable guarantees</em> for logistic downstream models while remaining
+                        lightweight and stable in practice.
+                    </p>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="figure/fmss.png" class="img-fluid" alt="FmSS Overview"
+                            style="width: 100%; max-width:400px; height: auto;" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAIRNESS GUARANTEES / NOTES -->
+    <div class="container p-5 theory">
+        <div class="row">
+            <h2 class="pb-4 text-center">Fairness Guarantees & Practical Notes</h2>
+            <div class="col-12 col-md-6 p-md-3 pt-0 pb-2 border-end-md">
+                <h5 class="fw-bold">Provable control (FmSS)</h5>
+                <p>
+                    Matching group-wise means and variances makes $Z$ <em>uninformative for a logistic adversary</em>
+                    (coefficients trend to zero as moments align), delivering post-hoc fairness certificates for that
+                    model family.
+                </p>
+            </div>
+            <div class="col-12 col-md-6 p-md-3 pt-0 pb-2">
+                <h5 class="fw-bold">Practical deployment</h5>
+                <p>
+                    Unlike several competing approaches, the trained classifier does <em>not</em> require the sensitive
+                    attribute at inference. The penalties add little overhead and plug into standard PyTorch training
+                    loops.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Bootstrap JS Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>
